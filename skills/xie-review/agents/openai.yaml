@@ -1,0 +1,7 @@
+interface:
+  display_name: "写小说·审稿"
+  short_description: "审稿、终审、送审包装与项目清理"
+  default_prompt: "Use $xie-review for Chinese novel review, final audit, professional AI review packages, external report reconciliation, and conservative cleanup."
+
+policy:
+  allow_implicit_invocation: true

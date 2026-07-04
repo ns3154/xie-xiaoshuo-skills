@@ -1,0 +1,7 @@
+interface:
+  display_name: "写小说·封面"
+  short_description: "小说封面生成、迭代与尺寸检查"
+  default_prompt: "Use $xie-cover for Chinese web novel cover generation and iteration with book title, author name, platform sizing, and quality checks."
+
+policy:
+  allow_implicit_invocation: true

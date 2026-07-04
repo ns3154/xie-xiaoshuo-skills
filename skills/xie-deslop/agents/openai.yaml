@@ -1,0 +1,7 @@
+interface:
+  display_name: "写小说·去AI味"
+  short_description: "清理模板腔、机械句式与模型退化"
+  default_prompt: "Use $xie-deslop to reduce AI-like writing in Chinese fiction while preserving intent, voice, plot, and foreshadowing."
+
+policy:
+  allow_implicit_invocation: true

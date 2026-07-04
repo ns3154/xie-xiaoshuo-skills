@@ -1,0 +1,7 @@
+interface:
+  display_name: "写小说"
+  short_description: "中文网文工具箱总入口，自动路由到 xie-* 子技能"
+  default_prompt: "Use $xie-xiaoshuo as the Chinese web novel router. Keep ~/.agents/skills as the source of truth and route drafting, review, deslop, learning, import, or cover work to the matching xie-* skill."
+
+policy:
+  allow_implicit_invocation: true

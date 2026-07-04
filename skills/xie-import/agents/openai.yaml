@@ -1,0 +1,7 @@
+interface:
+  display_name: "写小说·导入"
+  short_description: "导入旧稿并反向生成写作记忆"
+  default_prompt: "Use $xie-import to import an existing Chinese novel or draft into a structured writing project without changing the source text."
+
+policy:
+  allow_implicit_invocation: true

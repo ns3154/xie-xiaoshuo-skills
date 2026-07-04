@@ -1,0 +1,7 @@
+interface:
+  display_name: "写小说·写作"
+  short_description: "正文、续写、改稿、大纲与记忆回写"
+  default_prompt: "Use $xie-write for Chinese web novel drafting, revision, chapter specs, style continuity, and writing memory updates."
+
+policy:
+  allow_implicit_invocation: true

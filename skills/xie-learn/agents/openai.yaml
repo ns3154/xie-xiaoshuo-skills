@@ -1,0 +1,7 @@
+interface:
+  display_name: "写小说·对标学习"
+  short_description: "扫榜、拆文、对标与市场方法沉淀"
+  default_prompt: "Use $xie-learn for Chinese web novel market scanning, benchmark deconstruction, trend analysis, and method-layer extraction."
+
+policy:
+  allow_implicit_invocation: true
