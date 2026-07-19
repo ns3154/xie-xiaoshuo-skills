@@ -120,6 +120,33 @@ class NovelToolsTest(unittest.TestCase):
 
         self.assertTrue(any("占位" in error for error in errors), errors)
 
+    def test_validate_project_rejects_halfwidth_quotes_around_chinese(self) -> None:
+        root = self.make_project()
+        chapter = root / "正文" / "第一卷-测试" / "第001章-开端.txt"
+        chapter.write_text(
+            "第1章 开端\n"
+            "“将军明日来，只会听见一个'公子终究还是伏了法'的说法。”\n"
+            '他又补了一句："明日一早来收尸。"\n',
+            encoding="utf-8",
+        )
+
+        errors = novel_tools.validate_project(root, expected_count=2)
+
+        self.assertTrue(any("英文半角引号" in error for error in errors), errors)
+        self.assertTrue(any("第2、3行" in error for error in errors), errors)
+
+    def test_validate_project_allows_chinese_nested_quotes_and_english_original(self) -> None:
+        root = self.make_project()
+        chapter = root / "正文" / "第一卷-测试" / "第001章-开端.txt"
+        chapter.write_text(
+            "第1章 开端\n"
+            "“将军明日来，只会听见一个‘公子终究还是伏了法’的说法。”\n"
+            "他指着纸上的英文原文：“Don't move.”\n",
+            encoding="utf-8",
+        )
+
+        self.assertEqual([], novel_tools.validate_project(root, expected_count=2))
+
     def test_create_zip_excludes_cache_and_allows_include_as(self) -> None:
         root = self.make_project()
         (root / "正文" / ".DS_Store").write_text("cache", encoding="utf-8")

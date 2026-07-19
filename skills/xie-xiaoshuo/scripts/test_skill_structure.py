@@ -70,6 +70,46 @@ class XieSplitStructureTest(unittest.TestCase):
         self.assertIn("不要把整套资料或全部正文一次性塞进上下文", content)
         self.assertNotIn("长篇写作和正文修订至少读取", content)
 
+    def test_xie_write_locks_genre_engine_contract(self) -> None:
+        content = (SKILLS_ROOT / "xie-write" / "SKILL.md").read_text(encoding="utf-8")
+
+        self.assertIn("题材主引擎", content)
+        self.assertIn("推进章或回报章", content)
+        self.assertIn("非悬疑题材", content)
+        self.assertIn("悬疑是主引擎或共同主引擎", content)
+        self.assertIn("获得新信息", content)
+        self.assertIn("无脸新谜面", content)
+        self.assertIn("已完成的主类型推进或回报", content)
+        self.assertIn("未兑现的悬念债务", content)
+
+    def test_xie_write_requires_chinese_fullwidth_quotes(self) -> None:
+        content = (SKILLS_ROOT / "xie-write" / "SKILL.md").read_text(encoding="utf-8")
+
+        self.assertIn("外层使用 `“”`，嵌套引语使用 `‘’`", content)
+        self.assertIn("英文半角引号", content)
+
+    def test_xie_write_templates_separate_payoff_from_suspense(self) -> None:
+        templates = (SKILLS_ROOT / "xie-write" / "references" / "templates.md").read_text(
+            encoding="utf-8"
+        )
+        governance = (
+            SKILLS_ROOT / "xie-write" / "references" / "input-governance.md"
+        ).read_text(encoding="utf-8")
+
+        for field in (
+            "题材主引擎",
+            "本章阶段：推进 / 回报",
+            "本章主类型推进或回报",
+            "悬念职责",
+            "是否新增谜面及回收期限",
+            "结尾钩子类型",
+        ):
+            self.assertIn(field, templates)
+        self.assertNotIn("本章爽点或悬念：", templates)
+        self.assertIn("本章必须完成的主类型推进或回报", governance)
+        self.assertIn("可暂缓的伏笔债务", governance)
+        self.assertIn("不能仅因仍是 `open`", governance)
+
 
 if __name__ == "__main__":
     unittest.main()

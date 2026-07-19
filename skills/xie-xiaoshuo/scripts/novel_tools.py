@@ -233,6 +233,10 @@ PLACEHOLDER_RE = re.compile(
     r"(?im)^\s*(?:[#>*-]\s*)?(?:TODO|TBD|FIXME|待补|占位)(?:\s*[:：]|\s|$)"
     r"|[\[【(<（]\s*(?:TODO|TBD|FIXME|待补|占位)\s*[\]】)>）]"
 )
+HALFWIDTH_CJK_QUOTE_RE = re.compile(
+    r'"[^"\n]*[\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff][^"\n]*"'
+    r"|'[^'\n]*[\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff][^'\n]*'"
+)
 EXCLUDED_NAMES = {".DS_Store", "__pycache__"}
 EXCLUDED_SUFFIXES = {".pyc"}
 
@@ -371,6 +375,17 @@ def validate_project(
             )
         if PLACEHOLDER_RE.search(chapter.text):
             errors.append(f"{chapter.rel_path}：正文含 TODO/TBD/FIXME/待补/占位 残留")
+        halfwidth_quote_lines = [
+            str(line_no)
+            for line_no, line in enumerate(chapter.text.splitlines(), start=1)
+            if HALFWIDTH_CJK_QUOTE_RE.search(line)
+        ]
+        if halfwidth_quote_lines:
+            errors.append(
+                f"{chapter.rel_path}：正文用英文半角引号包裹中文"
+                f"（第{'、'.join(halfwidth_quote_lines)}行）；"
+                "外层应使用“”，嵌套引语应使用‘’"
+            )
 
     numbers = [chapter.file_number for chapter in chapters if chapter.file_number is not None]
     duplicates = sorted(number for number, count in Counter(numbers).items() if count > 1)
