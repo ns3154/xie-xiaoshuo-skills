@@ -54,3 +54,4 @@ PY
 
 python3 -m unittest discover -s "$SKILLS_DIR/xie-xiaoshuo/scripts" -p 'test_*.py'
 
+bash "$ROOT/scripts/test-sync-to-local.sh"
